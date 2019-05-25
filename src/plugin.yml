@@ -1,0 +1,6 @@
+name: Donation
+version: 0.1-SNAPSHOT
+main: me.fascinated.donation.Donation
+author: Fascinated
+commands:
+  donation:
