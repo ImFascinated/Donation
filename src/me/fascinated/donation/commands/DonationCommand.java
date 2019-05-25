@@ -18,22 +18,24 @@ public class DonationCommand implements CommandExecutor {
     public boolean onCommand(CommandSender s, Command c, String l, String[] args) {
         Player player = (Player) s;
 
-        if (args.length < 1) {
-            help(player);
-        } else {
-            if (args[0].equalsIgnoreCase("reload")) {
-                player.sendMessage("§e§lNotice §8▪ §fThe configuration is reloading...");
-                try {
-                    player.sendMessage("§a§lSuccess §8▪ §fThe configuration has reloaded!");
-                    Donation.config.reloadConfig();
-                } catch (Exception ex) {
-                    player.sendMessage("§c§lError §8▪ §fThe configuration has failed to reload!");
-                    ex.printStackTrace();
-                }
+        if (player.hasPermission("donation.command.admin")) {
+            if (args.length < 1) {
+                help(player);
             } else {
-                player.playSound(player.getLocation(), Sound.valueOf(Donation.config.getConfiguration().getString("SOUND")), 1L, 1L);
-                for (String msg : Donation.config.getConfiguration().getStringList("DONATION-MESSAGE")) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg.replace("$player", args[0])));
+                if (args[0].equalsIgnoreCase("reload")) {
+                    player.sendMessage("§e§lNotice §8▪ §fThe configuration is reloading...");
+                    try {
+                        player.sendMessage("§a§lSuccess §8▪ §fThe configuration has reloaded!");
+                        Donation.config.reloadConfig();
+                    } catch (Exception ex) {
+                        player.sendMessage("§c§lError §8▪ §fThe configuration has failed to reload!");
+                        ex.printStackTrace();
+                    }
+                } else {
+                    player.playSound(player.getLocation(), Sound.valueOf(Donation.config.getConfiguration().getString("SOUND")), 1L, 1L);
+                    for (String msg : Donation.config.getConfiguration().getStringList("DONATION-MESSAGE")) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg.replace("$player", args[0])));
+                    }
                 }
             }
         }
