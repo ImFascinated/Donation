@@ -2,6 +2,7 @@ package me.fascinated.donation;
 
 import me.fascinated.donation.commands.DonationCommand;
 import me.fascinated.donation.util.Config;
+import me.fascinated.donation.util.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static org.bukkit.Bukkit.getConsoleSender;
@@ -17,6 +18,7 @@ public class Donation extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
+        new Metrics(this);
         config = new Config(this, "config.yml", null);
         config.saveDefaultConfig();
         getCommand("donation").setExecutor(new DonationCommand());
